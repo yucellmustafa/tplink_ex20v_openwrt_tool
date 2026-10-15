@@ -4,10 +4,13 @@ Bu depo, TP-Link EX20v v2 cihazında stok firmware yedeği almak, OpenWrt kurmak
 açılış slotunu yönetmek ve gerektiğinde cihazın kendi yedeğinden stok firmware'e
 dönmek için hazırlanmış tek dosyalık Windows aracıdır.
 
-Kurulum ve kurtarma işlemlerinin tamamı `ex20v-tool.ps1` tarafından yönetilir.
-Python, Tftpd64 veya ayrı shell scriptleri çalıştırmak gerekmez. Araç gerekli
-HTTP/TFTP sunucularını geçici olarak kendisi açar ve `files` klasöründeki
-firmware imajlarını kullanır.
+Kurulum ve kurtarma işlemlerinin tamamı çift tıklanarak çalıştırılabilen
+`ex20v-tool.exe` tarafından yönetilir. Python, Tftpd64 veya ayrı shell scriptleri
+çalıştırmak gerekmez. Araç gerekli HTTP/TFTP sunucularını geçici olarak kendisi
+açar ve `files` klasöründeki firmware imajlarını kullanır. PowerShell kaynak kodu
+inceleme ve geliştirme amacıyla `ex20v-tool.ps1` dosyasında tutulur. Derlenmiş
+EXE kaynak depoda tutulmaz; GitHub Releases bölümündeki hazır ZIP paketinde
+sunulur.
 
 Bu çalışma; [OpenWrt](https://github.com/openwrt/openwrt) topluluğunun,
 EcoNet için geliştirilen açık kaynak sürücülerin ve daha önce EX20v üzerinde
@@ -51,6 +54,7 @@ Linux parolası birbirinden farklıysa ikisini ayrı ayrı isteyebilir.
 ```text
 openwrt-ex20v-v2/
 ├── ex20v-tool.ps1
+├── icon.png
 ├── files/
 │   ├── ex20v-rescue.bin
 │   ├── ex20v-kernel.bin
@@ -63,7 +67,8 @@ openwrt-ex20v-v2/
 
 | Dosya | Kullanım amacı |
 | --- | --- |
-| `ex20v-tool.ps1` | Yedekleme, kurulum, kurtarma ve stok geri dönüş aracı |
+| `ex20v-tool.ps1` | Aracın okunabilir PowerShell kaynak kodu |
+| `icon.png` | EXE dosyasına gömülen uygulama ikonunun kaynak görseli |
 | `ex20v-rescue.bin` | Slot A'da çalışan RAM tabanlı rescue OpenWrt |
 | `ex20v-kernel.bin` | Slot B'deki ana OpenWrt kerneli |
 | `ex20v-ubi.bin` | Ana OpenWrt UBI/rootfs imajı |
@@ -71,6 +76,37 @@ openwrt-ex20v-v2/
 
 `Backups` klasörü ilk çalıştırmada otomatik oluşturulur. Cihaza özel yedekler
 Git'e eklenmez.
+
+## GitHub Release paketi
+
+Normal kullanıcılar kaynak kod ZIP'i yerine GitHub Releases bölümünde yayımlanan
+`EX20v-v2-OpenWrt-Tool-v1.0.0.zip` dosyasını indirmelidir. Paket açıldığında şu
+yapı oluşur:
+
+```text
+EX20v-v2-OpenWrt-Tool-v1.0.0/
+├── ex20v-tool.exe
+├── README.md
+└── files/
+    ├── ex20v-rescue.bin
+    ├── ex20v-kernel.bin
+    ├── ex20v-ubi.bin
+    └── ex20v-v2-sysupgrade.bin
+```
+
+EXE ile `files` klasörünü birbirinden ayırmayın. Derlenmiş EXE ve yerel `dist`
+klasörü `.gitignore` kapsamındadır; bunlar kaynak depoya commit edilmez.
+
+### Windows aracının bütünlük bilgisi
+
+| Dosya | Sürüm | Boyut | SHA256 |
+| --- | --- | ---: | --- |
+| `ex20v-tool.exe` | 1.0.0.0 | 117.760 bayt | `1d1de36fb38e10f23943fe1fb578036e16625d60e79d29453577593c848b6a5c` |
+
+EXE, 64 bit Windows için PowerShell kaynak kodundan üretilmiş ve `icon.png`
+görseli çok çözünürlüklü Windows ikonu olarak dosyaya gömülmüştür. EXE'nin
+dijital kod imzası yoktur. Dosyayı farklı bir kaynaktan aldıysanız çalıştırmadan
+önce SHA256 değerini karşılaştırın.
 
 ## Paketle gelen imajlar
 
@@ -101,17 +137,25 @@ izin verin. Araç varsayılan olarak TCP/UDP `8000` portunu kullanır.
 
 ## Aracı başlatma
 
-1. `ex20v-tool.ps1` dosyasına sağ tıklayın.
-2. **PowerShell ile çalıştır** seçeneğini seçin.
-3. Windows UAC penceresinde yönetici iznini onaylayın.
-4. Ana menü otomatik açılır.
+1. GitHub Releases bölümünden hazır ZIP paketini indirin.
+2. ZIP'in tamamını bir klasöre çıkarın; EXE'yi arşivin içinden çalıştırmayın.
+3. `ex20v-tool.exe` dosyasına çift tıklayın.
+4. Windows UAC penceresinde yönetici iznini onaylayın.
+5. Ana menü otomatik açılır.
 
-Önceden terminal açıp komut yazmanız gerekmez. Araç yönetici değilse kendisini
-otomatik olarak yönetici yetkisiyle yeniden başlatır. Menüde
-`Yönetici yetkisi: etkin` bilgisi görünür.
+Önceden terminal açıp komut yazmanız gerekmez. EXE yönetici yetkisi isteyen bir
+Windows manifesti içerir. Menüde `Yönetici yetkisi: etkin` bilgisi görünür.
 
-Windows indirilen scripti engellerse dosyaya sağ tıklayın, **Özellikler**
-penceresindeki **Engellemeyi kaldır** seçeneğini işaretleyip tekrar çalıştırın.
+EXE dijital olarak imzalanmadığı için Windows SmartScreen ilk çalıştırmada uyarı
+gösterebilir. Dosyayı projenin GitHub Releases bölümünden indirdiğinizi ve
+yukarıdaki SHA256 değerinin eşleştiğini doğruladıktan sonra **Ek bilgi** ve
+**Yine de çalıştır** seçeneklerini kullanabilirsiniz. Windows dosyayı engellerse
+EXE'ye sağ tıklayın, **Özellikler** penceresindeki **Engellemeyi kaldır**
+seçeneğini işaretleyip yeniden çalıştırın.
+
+Kaynak sürümü çalıştırmak isteyen geliştiriciler `ex20v-tool.ps1` dosyasına sağ
+tıklayıp **PowerShell ile çalıştır** seçeneğini kullanabilir. EXE ve PS1 aynı
+işlevleri sunar; normal kullanım için EXE önerilir.
 
 ## Ana menü
 
@@ -412,7 +456,12 @@ açık kaynak geliştiricilerine ve topluluk üyelerine teşekkür ederiz:
 - [Özgün Okan](https://github.com/ozgunokan) — EX20v OpenWrt çalışmalarına
   katkıları ve
   [`ozgunokan/openwrt-tplink-ex20v`](https://github.com/ozgunokan/openwrt-tplink-ex20v)
-  deposunu topluluğa sunduğu için.
+  deposunu topluluğa sunduğu için. EX20v v2 desteğinde yararlanılan Ethernet/PPE
+  davranışı, LED ve düğme GPIO'ları, port eşlemesi, firewall4 flowtable düzeni
+  ve mt76 MAC yaklaşımı Özgün Okan tarafından geliştirilmiştir.
+- [Markus Scholtes](https://github.com/MScholtes/PS2EXE) ve Ingo Karstein —
+  PowerShell aracını Windows EXE dosyasına dönüştürmekte kullanılan açık kaynak
+  PS2EXE projesi için.
 - Cihaz üzerinde deneme yapan, hata bildiren ve geri bildirim sağlayan tüm
   topluluk üyeleri.
 

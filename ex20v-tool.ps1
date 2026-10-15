@@ -23,15 +23,26 @@ function Test-Administrator {
 
 if (-not (Test-Administrator)) {
     $scriptPath = $MyInvocation.MyCommand.Path
+    if ([string]::IsNullOrWhiteSpace($scriptPath)) {
+        $scriptPath = [Diagnostics.Process]::GetCurrentProcess().MainModule.FileName
+    }
     $workingDirectory = Split-Path -Parent $scriptPath
-    $arguments = @(
-        '-NoProfile',
-        '-ExecutionPolicy', 'Bypass',
-        '-File', ('"{0}"' -f $scriptPath),
-        '-Port', $Port
-    )
+    $isExecutable = [IO.Path]::GetExtension($scriptPath) -ieq '.exe'
+    if ($isExecutable) {
+        $executable = $scriptPath
+        $arguments = @('-Port', $Port)
+    }
+    else {
+        $executable = Join-Path $PSHOME 'powershell.exe'
+        $arguments = @(
+            '-NoProfile',
+            '-ExecutionPolicy', 'Bypass',
+            '-File', ('"{0}"' -f $scriptPath),
+            '-Port', $Port
+        )
+    }
     try {
-        [void](Start-Process -FilePath (Join-Path $PSHOME 'powershell.exe') `
+        [void](Start-Process -FilePath $executable `
             -Verb RunAs -WorkingDirectory $workingDirectory -ArgumentList $arguments)
     }
     catch {
@@ -47,7 +58,13 @@ $ErrorActionPreference = 'Stop'
 
 try { $Host.UI.RawUI.WindowTitle = 'TP-Link EX20v v2 - OpenWrt Araci (Yonetici)' } catch {}
 
-$script:ToolRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
+$compiledRoot = Get-Variable -Name ScriptRoot -ErrorAction SilentlyContinue
+$script:ToolRoot = if ($null -ne $compiledRoot -and -not [string]::IsNullOrWhiteSpace($compiledRoot.Value)) {
+    $compiledRoot.Value
+}
+else {
+    $PSScriptRoot
+}
 $script:ImageRoot = Join-Path $script:ToolRoot 'files'
 $script:BackupRoot = Join-Path $script:ToolRoot 'Backups'
 $script:StateRoot = Join-Path $script:BackupRoot '.state'

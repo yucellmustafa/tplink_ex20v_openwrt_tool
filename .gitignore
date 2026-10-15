@@ -4,6 +4,10 @@ Backups/
 # Geçici aktarım dosyaları
 *.part
 
+# Yerel derleme ve GitHub Release çıktıları
+/ex20v-tool.exe
+/dist/
+
 # Windows dosya yöneticisi kalıntıları
 Thumbs.db
 Desktop.ini
