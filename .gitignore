@@ -1,0 +1,9 @@
+# Cihaz yedekleri ve çalışma sırasında üretilen yerel durum dosyaları
+Backups/
+
+# Geçici aktarım dosyaları
+*.part
+
+# Windows dosya yöneticisi kalıntıları
+Thumbs.db
+Desktop.ini
