@@ -444,26 +444,13 @@ engeller.
 Bu aracın ve beraberindeki OpenWrt imajlarının ortaya çıkmasını mümkün kılan
 açık kaynak geliştiricilerine ve topluluk üyelerine teşekkür ederiz:
 
-- [OpenWrt Projesi](https://github.com/openwrt/openwrt) — açık kaynak işletim
-  sistemi, derleme altyapısı ve EcoNet EN7528 hedefi için.
-- [Caleb James DeLisle](https://github.com/cjdelisle) —
-  [`econet_eth`](https://github.com/cjdelisle/econet_eth) Ethernet sürücüsü ve
-  EcoNet platformuna yaptığı katkılar için.
-- [Emre Yavuzalp](https://github.com/EmreYavuzalp) — EX20v v1 OpenWrt portundaki
-  öncü teknik çalışmaları ve
-  [`EmreYavuzalp/openwrt-tplink-ex20v`](https://github.com/EmreYavuzalp/openwrt-tplink-ex20v)
-  deposunu topluluğa sunduğu için.
-- [Özgün Okan](https://github.com/ozgunokan) — EX20v OpenWrt çalışmalarına
-  katkıları ve
-  [`ozgunokan/openwrt-tplink-ex20v`](https://github.com/ozgunokan/openwrt-tplink-ex20v)
-  deposunu topluluğa sunduğu için. EX20v v2 desteğinde yararlanılan Ethernet/PPE
-  davranışı, LED ve düğme GPIO'ları, port eşlemesi, firewall4 flowtable düzeni
-  ve mt76 MAC yaklaşımı Özgün Okan tarafından geliştirilmiştir.
-- [Markus Scholtes](https://github.com/MScholtes/PS2EXE) ve Ingo Karstein —
-  PowerShell aracını Windows EXE dosyasına dönüştürmekte kullanılan açık kaynak
-  PS2EXE projesi için.
-- Cihaz üzerinde deneme yapan, hata bildiren ve geri bildirim sağlayan tüm
-  topluluk üyeleri.
+- [OpenWrt Projesi](https://github.com/openwrt/openwrt) — açık kaynak işletim sistemi, derleme altyapısı ve EcoNet EN7528 hedefi için.
+- [Caleb James DeLisle](https://github.com/cjdelisle) — [`econet_eth`](https://github.com/cjdelisle/econet_eth) Ethernet sürücüsü ve EcoNet platformuna yaptığı katkılar için.
+- [Emre Yavuzalp](https://github.com/EmreYavuzalp) — EX20v v1 OpenWrt portundaki öncü teknik çalışmaları ve [`EmreYavuzalp/openwrt-tplink-ex20v`](https://github.com/EmreYavuzalp/openwrt-tplink-ex20v) deposunu topluluğa sunduğu için.
+- [Özgün Okan](https://github.com/ozgunokan) — EX20v OpenWrt çalışmalarına katkıları ve [`ozgunokan/openwrt-tplink-ex20v`](https://github.com/ozgunokan/openwrt-tplink-ex20v) deposunu topluluğa sunduğu için. EX20v v2 desteğinde yararlanılan Ethernet/PPE davranışı, LED ve düğme GPIO'ları, port eşlemesi, firewall4 flowtable düzeni ve mt76 MAC yaklaşımı Özgün Okan tarafından geliştirilmiştir.
+- [Laserbird](https://github.com/laserbirdx) — EX20v OpenWrt geliştirme sürecinde sağladığı değerli destek, teknik yardımlar ve sorunların çözümüne yönelik katkıları için.
+- [Markus Scholtes](https://github.com/MScholtes/PS2EXE) ve Ingo Karstein — PowerShell aracını Windows EXE dosyasına dönüştürmekte kullanılan açık kaynak PS2EXE projesi için.
+- Cihaz üzerinde deneme yapan, hata bildiren ve geri bildirim sağlayan tüm topluluk üyeleri.
 
 Bu proje bağımsız bir topluluk çalışmasıdır. TP-Link, Türk Telekom, EcoNet,
 MediaTek veya OpenWrt projesiyle resmî bir bağı yoktur ve bu kuruluşlar
